@@ -4,16 +4,40 @@ import {
     StyleSheet,
     View,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 
 export default class FormForLogin extends Component<{}>{
 
-    onPress = () => {
-        this.setState({
-            count: this.state.count+1
-        })
+    constructor(props){
+        super(props);
+
+        this.state = {
+            login: '',
+            password: '',
+        }
     }
+
+    onPress = () =>{
+        console.log(this.state.login + ' ' + this.state.password);
+        const loginAndPassword = {
+            login: this.state.login,
+            password: this.state.password
+        };
+
+        fetch('http://localhost:8080/send_mail_password', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                login: this.state.login,
+                password: this.state.password,
+            }),
+        });
+
+    };
 
     render(){
         return(
@@ -25,7 +49,7 @@ export default class FormForLogin extends Component<{}>{
                            selectionColor='#ffffff'
                            keyboardType='email-address'
                            onSubmitEditing={() => this.password.focus()} // move user to password field
-                           onChangeText={(text) => this.setState({input: text})}
+                           onChangeText={(text) => this.setState({login:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -34,6 +58,7 @@ export default class FormForLogin extends Component<{}>{
                            placeholderTextColor="#ffffff"
                            selectionColor='#ffffff'
                            ref={(input) => this.password = input} // move user to password field
+                           onChangeText={(text) => this.setState({password:text})}
                 />
 
                 <TouchableOpacity

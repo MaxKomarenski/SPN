@@ -7,7 +7,6 @@ import {
 
 
 import Routes from './src/Routes';
-// import FetchExample from './src/FetchExample';
 
 export default class App extends Component<{}> {
 
@@ -19,7 +18,6 @@ export default class App extends Component<{}> {
                     barStyle="dark-content"
                 />
                 <Routes/>
-                {/*<FetchExample/>*/}
 
             </View>
         );

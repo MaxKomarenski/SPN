@@ -9,10 +9,6 @@ import {
 
 export default class FormForLogin extends Component<{}>{
 
-    static print (output) {
-
-    }
-
     render(){
         return(
             <View style={styles.container}>
