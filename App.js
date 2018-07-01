@@ -7,16 +7,20 @@ import {
 
 
 import Routes from './src/Routes';
+// import FetchExample from './src/FetchExample';
 
 export default class App extends Component<{}> {
+
     render() {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    backgroundColor="#1c313a"
-                    barStyle="light-content"
+                    backgroundColor="#ffffff"
+                    barStyle="dark-content"
                 />
                 <Routes/>
+                {/*<FetchExample/>*/}
+
             </View>
         );
     }

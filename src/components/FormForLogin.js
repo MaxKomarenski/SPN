@@ -9,6 +9,12 @@ import {
 
 export default class FormForLogin extends Component<{}>{
 
+    onPress = () => {
+        this.setState({
+            count: this.state.count+1
+        })
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -19,6 +25,7 @@ export default class FormForLogin extends Component<{}>{
                            selectionColor='#ffffff'
                            keyboardType='email-address'
                            onSubmitEditing={() => this.password.focus()} // move user to password field
+                           onChangeText={(text) => this.setState({input: text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -29,7 +36,9 @@ export default class FormForLogin extends Component<{}>{
                            ref={(input) => this.password = input} // move user to password field
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={this.onPress}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
             </View>
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
     },
     button:{
         width:300,
-        backgroundColor:'#E8950C',
+        backgroundColor:'#ee484c',
         borderRadius:25,
         marginVertical:5,
         alignItems:'center',

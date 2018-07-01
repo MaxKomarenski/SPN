@@ -24,7 +24,7 @@ export default class Login extends Component<{}>{
                 <View style={styles.signupText}>
                     <Text style={{fontSize:16}}>Don't have an account yet?</Text>
                     <TouchableOpacity onPress={Login.signup}>
-                        <Text style={{fontSize:16, color:'#E8950C'}}> Sign up!</Text>
+                        <Text style={{fontSize:16, color:'#ee484c'}}> Sign up!</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -9,6 +9,10 @@ import {
 
 export default class FormForLogin extends Component<{}>{
 
+    static print (output) {
+
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     },
     button:{
         width:300,
-        backgroundColor:'#E8950C',
+        backgroundColor:'#ee484c',
         borderRadius:25,
         marginVertical:5,
         alignItems:'center',
