@@ -9,6 +9,39 @@ import {
 
 export default class FormForLogin extends Component<{}>{
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            name: '',
+            surname: '',
+            phone: '',
+            city: '',
+            email: '',
+            password: '',
+        }
+    }
+
+    onPress = () => {
+        const registrationForm = {
+            name: this.state.name,
+            surname: this.state.surname,
+            phone: this.state.phone,
+            city: this.state.city,
+            email: this.state.email,
+            password: this.state.password,
+        };
+
+        fetch('http://localhost:8080/send_registration_form', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(registrationForm),
+        });
+    };
+
     render(){
         return(
             <View style={styles.container}>
@@ -19,6 +52,7 @@ export default class FormForLogin extends Component<{}>{
                            selectionColor='#ffffff'
                            onSubmitEditing={() => this.surname.focus()}
                            ref={(input) => this.name = input}
+                           onChangeText={(text) => this.setState({name:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -27,6 +61,7 @@ export default class FormForLogin extends Component<{}>{
                            selectionColor='#ffffff'
                            onSubmitEditing={() => this.phone.focus()}
                            ref={(input) => this.surname = input}
+                           onChangeText={(text) => this.setState({surname:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -36,6 +71,7 @@ export default class FormForLogin extends Component<{}>{
                            keyboardType='phone-pad'
                            onSubmitEditing={() => this.city.focus()}
                            ref={(input) => this.phone = input}
+                           onChangeText={(text) => this.setState({phone:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -44,6 +80,7 @@ export default class FormForLogin extends Component<{}>{
                            selectionColor='#ffffff'
                            onSubmitEditing={() => this.email.focus()}
                            ref={(input) => this.city = input}
+                           onChangeText={(text) => this.setState({city:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -53,6 +90,7 @@ export default class FormForLogin extends Component<{}>{
                            keyboardType='email-address'
                            onSubmitEditing={() => this.password.focus()}
                            ref={(input) => this.email = input}
+                           onChangeText={(text) => this.setState({email:text})}
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -61,6 +99,7 @@ export default class FormForLogin extends Component<{}>{
                            placeholderTextColor="#ffffff"
                            selectionColor='#ffffff'
                            ref={(input) => this.password = input}
+                           onChangeText={(text) => this.setState({password:text})}
                 />
 
                 <TouchableOpacity style={styles.button}>

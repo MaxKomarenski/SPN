@@ -31,10 +31,7 @@ export default class FormForLogin extends Component<{}>{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                login: this.state.login,
-                password: this.state.password,
-            }),
+            body: JSON.stringify(loginAndPassword),
         });
 
     };
