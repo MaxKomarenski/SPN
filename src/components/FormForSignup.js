@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ModalDropdown from 'react-native-modal-dropdown';
 import {
     Text,
     StyleSheet,
@@ -7,7 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-export default class FormForLogin extends Component<{}>{
+export default class FormForSignUp extends Component<{}>{
 
     constructor(props){
         super(props);
@@ -77,6 +78,7 @@ export default class FormForLogin extends Component<{}>{
                            ref={(input) => this.phone = input}
                            onChangeText={(text) => this.setState({phone:text})}
                 />
+
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="City"
