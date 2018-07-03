@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
+import KeyValueStorage from 'react-native-key-value-storage'
 
 export default class FormForLogin extends Component<{}>{
 
@@ -18,22 +19,41 @@ export default class FormForLogin extends Component<{}>{
         }
     }
 
-    onPress = () =>{
-        console.log(this.state.login + ' ' + this.state.password);
-        const loginAndPassword = {
-            login: this.state.login,
-            password: this.state.password
-        };
-
-        fetch('http://localhost:8080/send_mail_password', {
+    loginInServer =(logAndPass) => {
+        return fetch('http://10.0.2.2:8080/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(loginAndPassword),
-        });
+            body: JSON.stringify(logAndPass),
+        }).then((response) => response.headers.get('Authorization'))
+            .then((responseText) => {
+                //console.log('json  ------------    ' + responseText);
+                KeyValueStorage.set("access_key", responseText)
+            })
+            .catch((error) => {
+                console.log("reset client error-------",error);
+            });
+    };
 
+    onPress = () =>{
+        console.log(this.state.login + ' ' + this.state.password);
+        const loginAndPassword = {
+            email: this.state.login,
+            password: this.state.password
+        };
+
+        // fetch('http://10.0.2.2:8080/login', {
+        //     method: 'POST',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(loginAndPassword),
+        // });
+
+        this.loginInServer(loginAndPassword)
     };
 
     render(){

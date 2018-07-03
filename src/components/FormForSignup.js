@@ -44,6 +44,8 @@ export default class FormForSignUp extends Component<{}>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(registrationForm),
+        }).catch((error) =>{
+            console.error(error);
         });
     };
 
