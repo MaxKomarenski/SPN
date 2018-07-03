@@ -23,16 +23,20 @@ export default class FormForLogin extends Component<{}>{
     }
 
     onPress = () => {
+
         const registrationForm = {
             name: this.state.name,
-            surname: this.state.surname,
-            phone: this.state.phone,
+            familyName: this.state.surname,
+            phoneNumber: this.state.phone,
+            country: 'Ukraine',
             city: this.state.city,
             email: this.state.email,
             password: this.state.password,
         };
+        console.log('hui');
+        console.log(this.state.name + this.state.surname + this.state.phone + this.state.city + this.state.email + this.state.password);
 
-        fetch('http://localhost:8080/send_registration_form', {
+        fetch('http://10.0.2.2:8080/registration', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -103,7 +107,9 @@ export default class FormForLogin extends Component<{}>{
                 />
 
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>{this.props.type}</Text>
+                    <Text
+                        style={styles.buttonText}
+                        onPress={this.onPress}>{this.props.type}</Text>
                 </TouchableOpacity>
             </View>
 
