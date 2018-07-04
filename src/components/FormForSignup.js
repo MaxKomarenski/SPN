@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Geocoder from 'react-native-geocoder';
+import Geodecoder from 'react-native-geocoding';
 import {
     Text,
     StyleSheet,
     View,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity, Image, TouchableHighlight
 } from 'react-native';
+import Autocomplete from "react-native-autocomplete-input";
 
 export default class FormForSignUp extends Component<{}>{
 
@@ -20,8 +23,18 @@ export default class FormForSignUp extends Component<{}>{
             city: '',
             email: '',
             password: '',
-        }
+            country: '',
+
+        };
+
     }
+
+      getCountriesFromApi = () => {
+
+          console.log('COUNTRY '+ this.state.countryName);
+          console.log('CITY '+this.state.regionName)
+    };
+
 
     onPress = () => {
 
@@ -35,6 +48,7 @@ export default class FormForSignUp extends Component<{}>{
             password: this.state.password,
         };
         console.log('hui');
+
         console.log(this.state.name + this.state.surname + this.state.phone + this.state.city + this.state.email + this.state.password);
 
         fetch('http://10.0.2.2:8080/registration', {
@@ -48,8 +62,28 @@ export default class FormForSignUp extends Component<{}>{
             console.error(error);
         });
     };
+    componentDidMount() {
+        var url = 'http://api.ipstack.com/91.210.21.40?access_key=20c570200a2a491efbaff58ab7b440ef';
+        fetch(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                //console.log(responseJson);
+                this.setState({
+                    country: responseJson.country_name,
+                    city: responseJson.city
+                });
+                console.log('COUNTRY '+ responseJson.country_name);
+                console.log('CITY '+responseJson.city)
+                this.getCountriesFromApi();
+            })
+            .catch((error) => {
+                //console.error(error);
+            });
+    }
 
     render(){
+
+        const dropdown_6_icon = ('../img/ua.png');
         return(
             <View style={styles.container}>
                 <TextInput style={styles.inputBox}
@@ -76,15 +110,28 @@ export default class FormForSignUp extends Component<{}>{
                            placeholderTextColor="#ffffff"
                            selectionColor='#ffffff'
                            keyboardType='phone-pad'
-                           onSubmitEditing={() => this.city.focus()}
+                           onSubmitEditing={() => this.country.focus()}
                            ref={(input) => this.phone = input}
                            onChangeText={(text) => this.setState({phone:text})}
                 />
 
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
+                           placeholder="Country"
+                           placeholderTextColor="#ffffff"
+                           selectionColor='#ffffff'
+                           keyboardType='phone-pad'
+                           value={this.state.country}
+                           onSubmitEditing={() => this.city.focus()}
+                           ref={(input) => this.country = input}
+                           onChangeText={(text) => this.setState({country:text})}
+                />
+
+                <TextInput style={styles.inputBox}
+                           underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="City"
                            placeholderTextColor="#ffffff"
+                           value={this.state.city}
                            selectionColor='#ffffff'
                            onSubmitEditing={() => this.email.focus()}
                            ref={(input) => this.city = input}
@@ -119,13 +166,35 @@ export default class FormForSignUp extends Component<{}>{
 
         )
     }
+    _dropdown_onSelect(idx, value) {
+
+    }
+    _dropdown_renderRow(rowData, rowID, highlighted) {
+       // let icon = highlighted ? require('./images/heart.png') : require('./images/flower.png');
+        let evenRow = rowID % 2;
+        return (
+            <TouchableHighlight underlayColor='cornflowerblue'>
+                <View style={[styles.dropdown_2_row, {backgroundColor: '#000000'}]}>
+                    {/*<Image style={styles.dropdown_2_image}*/}
+                           {/*mode='stretch'*/}
+                           {/*source={icon}*/}
+                    {/*/>*/}
+                    <Text style={[styles.dropdown_2_row_text, highlighted && {color: 'mediumaquamarine'}]}>
+                        {`${rowData}`}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+        );
+    }
 }
+
 
 const styles = StyleSheet.create({
     container : {
         flexGrow:1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        flexDirection: 'column',
     },
     inputBox:{
         width:300,
@@ -136,6 +205,19 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#ffffff',
         marginVertical:5
+    },
+    autocompleteContainer: {
+        marginLeft: 10,
+        marginRight: 10
+    },
+    itemText: {
+        fontSize: 15,
+        margin: 2
+    },
+    autocomplete:{
+        width:300,
+        paddingVertical:13,
+
     },
     button:{
         width:300,
@@ -149,5 +231,32 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight:'500',
         color:'#ffffff',
-    }
+    },
+    dropdown_6: {
+        paddingRight:200,
+        left: 10,
+    },
+    dropdown_6_image: {
+        width: 40,
+        height: 40,
+    },
+    dropdown_2_row: {
+        flexDirection: 'row',
+        height: 40,
+        backgroundColor:'#000000',
+        alignItems: 'center',
+    },
+    dropdown_2_row_text: {
+        marginHorizontal: 4,
+        fontSize: 16,
+        color:'#ffffff',
+        textAlignVertical: 'center',
+    },
+    dropdown_2_dropdown: {
+        width: 300,
+        height: 150,
+        borderColor: 'cornflowerblue',
+        borderWidth: 2,
+        borderRadius: 3,
+    },
 });
