@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import KeyValueStorage from 'react-native-key-value-storage'
+import {Actions} from 'react-native-router-flux';
 
 export default class FormForLogin extends Component<{}>{
 
@@ -18,6 +19,11 @@ export default class FormForLogin extends Component<{}>{
             password: '',
         }
     }
+
+    moveToTheUserProfile = () => {
+      Actions.home()
+    };
+
 
     loginInServer =(logAndPass) => {
         return fetch('http://10.0.2.2:8080/login', {
@@ -53,7 +59,9 @@ export default class FormForLogin extends Component<{}>{
         //     body: JSON.stringify(loginAndPassword),
         // });
 
-        this.loginInServer(loginAndPassword)
+        if(this.loginInServer(loginAndPassword) !== 'Login Failed'){
+            this.moveToTheUserProfile();
+        }
     };
 
     render(){
