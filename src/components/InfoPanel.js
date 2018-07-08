@@ -66,7 +66,7 @@ class InfoPanel extends Component{
                         <Image
                             style={styles.buttonImage}
                             source={icon}
-                        ></Image>
+                        />
                     </TouchableHighlight>
                 </View>
 
