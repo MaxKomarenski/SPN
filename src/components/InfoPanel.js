@@ -5,8 +5,8 @@ class InfoPanel extends Component{
         super(props);
 
         this.icons = {
-            'down'    : require('../img/arrow_up.png'),
-            'up'  : require('../img/arrow_down.png')
+            'down'    : require('../img/arrow_down.png'),
+            'up'  : require('../img/arrow_up.png')
         };
 
         this.state = {
@@ -47,10 +47,10 @@ class InfoPanel extends Component{
 
 
     render(){
-        let icon = this.icons['up'];
+        let icon = this.icons['down'];
 
         if(this.state.expanded){
-            icon = this.icons['down'];
+            icon = this.icons['up'];
         }
 
 
