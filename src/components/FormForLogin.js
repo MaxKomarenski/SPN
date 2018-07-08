@@ -60,6 +60,7 @@ export default class FormForLogin extends Component<{}>{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
+
             body: JSON.stringify(logAndPass),
         }).then((response) => response.headers.get('Authorization'))
             .then((responseText) => {
