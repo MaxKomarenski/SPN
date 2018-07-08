@@ -5,13 +5,13 @@ class InfoPanel extends Component{
         super(props);
 
         this.icons = {
-            'up'    : require('../img/arrow_up.png'),
-            'down'  : require('../img/arrow_down.png')
+            'down'    : require('../img/arrow_down.png'),
+            'up'  : require('../img/arrow_up.png')
         };
 
         this.state = {
             title       : props.title,
-            expanded    : false,
+            expanded    : true,
             animation   : new Animated.Value()
         };
     }
@@ -47,10 +47,10 @@ class InfoPanel extends Component{
 
 
     render(){
-        let icon = this.icons['up'];
+        let icon = this.icons['down'];
 
         if(this.state.expanded){
-            icon = this.icons['down'];
+            icon = this.icons['up'];
         }
 
 
@@ -66,7 +66,7 @@ class InfoPanel extends Component{
                         <Image
                             style={styles.buttonImage}
                             source={icon}
-                        ></Image>
+                        />
                     </TouchableHighlight>
                 </View>
 

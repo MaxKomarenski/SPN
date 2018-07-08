@@ -5,7 +5,7 @@ import {
     Image,
     Text,
 } from 'react-native';
-import InfoPanel from './InfoPanel';
+
 export default class Header extends Component<{}>{
 
     render(){
@@ -19,9 +19,6 @@ export default class Header extends Component<{}>{
                 </View>
 
                 <Text style={styles.name}>Vitia Y</Text>
-                <InfoPanel title="A Panel with short content text">
-                    <Text>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</Text>
-                </InfoPanel>
 
             </View>
         )
