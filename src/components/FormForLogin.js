@@ -6,7 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
-import KeyValueStorage from 'react-native-key-value-storage'
+import { AsyncStorage } from "react-native"
 import {Actions} from 'react-native-router-flux';
 
 export default class FormForLogin extends Component<{}>{
@@ -17,6 +17,34 @@ export default class FormForLogin extends Component<{}>{
         this.state = {
             login: '',
             password: '',
+        };
+
+    }
+
+    componentDidMount(){
+
+        this._chek_logging();
+    }
+
+    _chek_logging = async () => {
+        console.log("CHECKING LOGGING");
+        try {
+            const value = await AsyncStorage.getItem('access_key');
+            if (value !== null) {
+                // We have data!!
+                console.log(value);
+                let LoginDateStr = AsyncStorage.getItem("login_date");
+                let LoginDate = new Date(LoginDateStr);
+                let TodaysDate = new Date();
+                if(TodaysDate.getMilliseconds() - LoginDate.getMilliseconds() > 864000000) {
+                    let creds = AsyncStorage.getItem("loginAndPass");
+                    this.loginInServer(creds);
+                }
+                this.moveToTheUserProfile();
+
+            }
+        } catch (error) {
+            console.log("ERROR");
         }
     }
 
@@ -36,7 +64,9 @@ export default class FormForLogin extends Component<{}>{
         }).then((response) => response.headers.get('Authorization'))
             .then((responseText) => {
                 //console.log('json  ------------    ' + responseText);
-                KeyValueStorage.set("access_key", responseText)
+                AsyncStorage.setItem("access_key", responseText);
+                AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
+                AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
             })
             .catch((error) => {
                 console.log("reset client error-------",error);

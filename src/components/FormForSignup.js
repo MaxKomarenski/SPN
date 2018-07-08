@@ -82,8 +82,6 @@ export default class FormForSignUp extends Component<{}>{
     }
 
     render(){
-
-        const dropdown_6_icon = ('../img/ua.png');
         return(
             <View style={styles.container}>
                 <TextInput style={styles.inputBox}
@@ -160,32 +158,13 @@ export default class FormForSignUp extends Component<{}>{
                 <TouchableOpacity style={styles.button}>
                     <Text
                         style={styles.buttonText}
-                        onPress={this.onPress}>{this.props.type}</Text>
+                        onPress={this.onPress.bind(this)}>{this.props.type}</Text>
                 </TouchableOpacity>
             </View>
 
         )
     }
-    _dropdown_onSelect(idx, value) {
-
-    }
-    _dropdown_renderRow(rowData, rowID, highlighted) {
-       // let icon = highlighted ? require('./images/heart.png') : require('./images/flower.png');
-        let evenRow = rowID % 2;
-        return (
-            <TouchableHighlight underlayColor='cornflowerblue'>
-                <View style={[styles.dropdown_2_row, {backgroundColor: '#000000'}]}>
-                    {/*<Image style={styles.dropdown_2_image}*/}
-                           {/*mode='stretch'*/}
-                           {/*source={icon}*/}
-                    {/*/>*/}
-                    <Text style={[styles.dropdown_2_row_text, highlighted && {color: 'mediumaquamarine'}]}>
-                        {`${rowData}`}
-                    </Text>
-                </View>
-            </TouchableHighlight>
-        );
-    }
+   
 }
 
 
