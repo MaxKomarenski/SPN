@@ -62,8 +62,9 @@ export default class FormForLogin extends Component<{}>{
             },
 
             body: JSON.stringify(logAndPass),
-        }).then((response) => response.headers.get('Authorization'))
-            .then((responseText) => {
+        }).then((response) =>{
+                 var responseText = response.headers.get('Authorization');
+
                 if(responseText === "Login Failed"){
                     alert("Login Failed");
                     return;
@@ -73,11 +74,12 @@ export default class FormForLogin extends Component<{}>{
                 AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
                 AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
                 this.state.status = true;
-                this.moveToTheUserProfile();
 
             }).finally(()=>{
              if(!this.state.status){
                  alert("Login Failed");
+             }else {
+                 this.moveToTheUserProfile();
              }
         })
             .catch((error) => {
