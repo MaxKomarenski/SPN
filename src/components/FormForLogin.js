@@ -32,7 +32,6 @@ export default class FormForLogin extends Component<{}>{
             const value = await AsyncStorage.getItem('access_key');
             if (value !== null) {
                 // We have data!!
-                console.log(value);
                 let LoginDateStr = AsyncStorage.getItem("login_date");
                 let LoginDate = new Date(LoginDateStr);
                 let TodaysDate = new Date();

@@ -5,8 +5,8 @@ class InfoPanel extends Component{
         super(props);
 
         this.icons = {
-            'up'    : require('../img/arrow_up.png'),
-            'down'  : require('../img/arrow_down.png')
+            'down'    : require('../img/arrow_up.png'),
+            'up'  : require('../img/arrow_down.png')
         };
 
         this.state = {
@@ -18,18 +18,18 @@ class InfoPanel extends Component{
 
     toggle(){
         //Step 1
-        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
-            finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
+        let finalValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+            initialValue  = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
 
         this.setState({
             expanded : !this.state.expanded
         });
 
-        this.state.animation.setValue(initialValue);
+        this.state.animation.setValue(finalValue);
         Animated.spring(
             this.state.animation,
             {
-                toValue: finalValue
+                toValue: initialValue
             }
         ).start();
     }
@@ -47,10 +47,10 @@ class InfoPanel extends Component{
 
 
     render(){
-        let icon = this.icons['down'];
+        let icon = this.icons['up'];
 
         if(this.state.expanded){
-            icon = this.icons['up'];
+            icon = this.icons['down'];
         }
 
 
