@@ -15,6 +15,7 @@ export default class FormForLogin extends Component<{}>{
         super(props);
 
         this.state = {
+            status: false,
             login: '',
             password: '',
         };
@@ -23,7 +24,7 @@ export default class FormForLogin extends Component<{}>{
 
     componentDidMount(){
 
-        this._chek_logging();
+      //  this._chek_logging();
     }
 
     _chek_logging = async () => {
@@ -45,7 +46,7 @@ export default class FormForLogin extends Component<{}>{
         } catch (error) {
             console.log("ERROR");
         }
-    }
+    };
 
     moveToTheUserProfile = () => {
       Actions.home()
@@ -53,7 +54,7 @@ export default class FormForLogin extends Component<{}>{
 
 
     loginInServer =(logAndPass) => {
-        return fetch('http://10.0.2.2:8080/login', {
+        fetch('http://10.0.2.2:8080/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -62,14 +63,30 @@ export default class FormForLogin extends Component<{}>{
             body: JSON.stringify(logAndPass),
         }).then((response) => response.headers.get('Authorization'))
             .then((responseText) => {
+                if(responseText === "Login Failed"){
+                    alert("Login Failed");
+                    return;
+                }
                 //console.log('json  ------------    ' + responseText);
                 AsyncStorage.setItem("access_key", responseText);
                 AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
                 AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
-            })
+                this.state.status = true;
+                this.moveToTheUserProfile();
+
+            }).finally(()=>{
+             if(!this.state.status){
+                 alert("Login Failed");
+             }
+        })
             .catch((error) => {
-                console.log("reset client error-------",error);
+                alert("Login Failed");
+                return "Login Failed";
+
             });
+
+
+
     };
 
     onPress = () =>{
@@ -79,18 +96,7 @@ export default class FormForLogin extends Component<{}>{
             password: this.state.password
         };
 
-        // fetch('http://10.0.2.2:8080/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(loginAndPassword),
-        // });
-
-        if(this.loginInServer(loginAndPassword) !== 'Login Failed'){
-            this.moveToTheUserProfile();
-        }
+        this.loginInServer(loginAndPassword);
     };
 
     render(){

@@ -5,13 +5,13 @@ class InfoPanel extends Component{
         super(props);
 
         this.icons = {
-            'down'    : require('../img/arrow_up.png'),
-            'up'  : require('../img/arrow_down.png')
+            'up'    : require('../img/arrow_up.png'),
+            'down'  : require('../img/arrow_down.png')
         };
 
         this.state = {
             title       : props.title,
-            expanded    : true,
+            expanded    : false,
             animation   : new Animated.Value()
         };
     }
