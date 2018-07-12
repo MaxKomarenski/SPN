@@ -20,7 +20,7 @@ export default class Login extends Component<{}>{
         return(
             <View style={styles.container}>
                 <Logo/>
-                <FormForLogin type='Login'/>
+                <FormForLogin type='Login' navigation={this.props.navigation}/>
                 <View style={styles.signupText}>
                     <Text style={{fontSize:16}}>Don't have an account yet?</Text>
                     <TouchableOpacity onPress={Login.signup}>

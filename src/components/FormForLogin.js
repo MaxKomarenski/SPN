@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import { AsyncStorage } from "react-native"
 import {Actions} from 'react-native-router-flux';
+import { createStackNavigator } from 'react-navigation';
+export default class FormForLogin extends React.Component{
 
-export default class FormForLogin extends Component<{}>{
 
     constructor(props){
         super(props);
@@ -18,13 +19,14 @@ export default class FormForLogin extends Component<{}>{
             status: false,
             login: '',
             password: '',
+            navigate : this.props.navigation
         };
 
     }
 
     componentDidMount(){
 
-      //  this._chek_logging();
+        this._chek_logging();
     }
 
     _chek_logging = async () => {
@@ -44,12 +46,14 @@ export default class FormForLogin extends Component<{}>{
 
             }
         } catch (error) {
-            console.log("ERROR");
+            console.log(error);
         }
     };
 
     moveToTheUserProfile = () => {
-      Actions.home()
+        console.log("navigation");
+        this.props.navigation.navigate('Home');
+        console.log("navigated");
     };
 
 
@@ -66,24 +70,19 @@ export default class FormForLogin extends Component<{}>{
                  var responseText = response.headers.get('Authorization');
 
                 if(responseText === "Login Failed"){
-                    alert("Login Failed");
+                    alert("Login Failed\n Wrong Login/Pass");
                     return;
                 }
                 //console.log('json  ------------    ' + responseText);
                 AsyncStorage.setItem("access_key", responseText);
                 AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
                 AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
-                this.state.status = true;
+                this.moveToTheUserProfile();
 
-            }).finally(()=>{
-             if(!this.state.status){
-                 alert("Login Failed");
-             }else {
-                 this.moveToTheUserProfile();
-             }
-        })
+            })
             .catch((error) => {
-                alert("Login Failed");
+                alert("Login Failed\n ERROR");
+                console.log(error)
                 return "Login Failed";
 
             });

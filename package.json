@@ -11,12 +11,14 @@
     "react": "16.3.1",
     "react-native": "0.55.4",
     "react-native-autocomplete-input": "^3.5.0",
+    "react-native-elements": "^0.19.1",
     "react-native-geocoder": "^0.5.0",
     "react-native-geocoding": "^0.3.0",
     "react-native-key-value-storage": "^2.1.0",
     "react-native-key-value-store": "^1.0.1",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-router-flux": "^4.0.0-beta.31",
+    "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.6.2"
   },
   "devDependencies": {

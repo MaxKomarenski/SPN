@@ -5,11 +5,13 @@ import {
     Text,
     Image
 } from 'react-native';
-
+import {createStackNavigator, StackNavigator} from 'react-navigation';
 import AccountHeader from '../components/AccountHeader';
 import InfoPanel from '../components/InfoPanel';
 import Bar from '../components/Bar';
 import PhotoGrid from '../components/PhotoGrid'
+import { DrawerNavigator } from 'react-navigation';
+import {HamburgerIcon} from "../../App";
 
 export default class Account extends Component<{}>{
 
@@ -39,7 +41,23 @@ export default class Account extends Component<{}>{
             </View>
         )
     }
+
 }
+
+export const Account_StackNavigator = StackNavigator({
+    First: {
+        screen: Account,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Account',
+            headerLeft : <HamburgerIcon navigationProps={ navigation }/>,
+
+            headerStyle: {
+                backgroundColor: '#FF9800'
+            },
+            headerTintColor: '#fff',
+        })
+    },
+});
 
 const styles = StyleSheet.create({
     container: {
