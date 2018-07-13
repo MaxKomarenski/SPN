@@ -52,7 +52,7 @@ export default class FormForLogin extends React.Component{
 
     moveToTheUserProfile = () => {
         console.log("navigation");
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Account');
         console.log("navigated");
     };
 
