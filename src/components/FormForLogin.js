@@ -67,7 +67,7 @@ export default class FormForLogin extends React.Component{
 
             body: JSON.stringify(logAndPass),
         }).then((response) =>{
-                 var responseText = response.headers.get('Authorization');
+                var responseText = response.headers.get('Authorization');
 
                 if(responseText === "Login Failed"){
                     alert("Login Failed\n Wrong Login/Pass");
@@ -75,6 +75,8 @@ export default class FormForLogin extends React.Component{
                 }
                 //console.log('json  ------------    ' + responseText);
                 AsyncStorage.setItem("access_key", responseText);
+                //console.log('id  ------------    ' + response.headers.get('id'));
+                AsyncStorage.setItem("user_id", response.headers.get('id'));
                 AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
                 AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
                 this.moveToTheUserProfile();

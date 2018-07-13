@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     Text,
-    Image
+    Image, AsyncStorage
 } from 'react-native';
 import {createStackNavigator, StackNavigator} from 'react-navigation';
 import AccountHeader from '../components/AccountHeader';
@@ -15,7 +15,60 @@ import {HamburgerIcon} from "../../App";
 
 export default class Account extends Component<{}>{
 
+    constructor() {
+        super();
+        this.state = {
+            phoneNumber: '',
+            cityAndCountry: ''
+        }
+    }
+    updateText = (number, country) => {
+        this.setState({phoneNumber: number, cityAndCountry: country})
+    };
+
+    // query
+
+    getUserInformation = async () => {
+
+        try {
+            let user_id = await AsyncStorage.getItem("user_id");
+            let access_key = await AsyncStorage.getItem("access_key");
+
+            const id = {
+                id: user_id
+            };
+
+            fetch('http://10.0.2.2:8080/get_user_information', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': access_key,
+                },
+
+                body: JSON.stringify(id),
+            }).then((response) => response.json())
+                .then((responseJSON) => {
+                    this.updateText(responseJSON.phoneNumber, responseJSON.place);
+
+                }).catch((error) => {
+                alert(error)
+            });
+
+
+
+        }catch (e) {
+            alert("1 " + e)
+        }
+
+
+    };
+
+    //
+
     render(){
+        this.getUserInformation();
+
         return(
             <View style={styles.container}>
                 <AccountHeader/>
@@ -25,7 +78,7 @@ export default class Account extends Component<{}>{
                             style={styles.iconInformation}
                             source={require('../img/phone.png')}
                         />
-                        <Text style={styles.textStyle}>1234567890</Text>
+                        <Text style={styles.textStyle}>{this.state.phoneNumber}</Text>
                     </View>
 
                     <View style={styles.informationView}>
@@ -33,7 +86,7 @@ export default class Account extends Component<{}>{
                             style={styles.iconInformation}
                             source={require('../img/country.png')}
                         />
-                        <Text style={styles.textStyle}>Lviv, Country</Text>
+                        <Text style={styles.textStyle}>{this.state.cityAndCountry}</Text>
                     </View>
                 </InfoPanel>
                 <Bar/>
