@@ -19,11 +19,12 @@ export default class Account extends Component<{}>{
         super();
         this.state = {
             phoneNumber: '',
-            cityAndCountry: ''
+            cityAndCountry: '',
+            email: '',
         }
     }
-    updateText = (number, country) => {
-        this.setState({phoneNumber: number, cityAndCountry: country})
+    updateText = (number, country, email) => {
+        this.setState({phoneNumber: number, cityAndCountry: country, email: email})
     };
 
     getUserInformation = async () => {
@@ -47,7 +48,7 @@ export default class Account extends Component<{}>{
                 body: JSON.stringify(id),
             }).then((response) => response.json())
                 .then((responseJSON) => {
-                    this.updateText(responseJSON.phoneNumber, responseJSON.place);
+                    this.updateText(responseJSON.phoneNumber, responseJSON.place, responseJSON.email);
 
                 }).catch((error) => {
                 alert(error)
@@ -88,6 +89,14 @@ export default class Account extends Component<{}>{
                             source={require('../img/country.png')}
                         />
                         <Text style={styles.textStyle}>{this.state.cityAndCountry}</Text>
+                    </View>
+
+                    <View style={styles.informationView}>
+                        <Image
+                            style={styles.iconInformation}
+                            source={require('../img/email.png')}
+                        />
+                        <Text style={styles.textStyle}>{this.state.email}</Text>
                     </View>
                 </InfoPanel>
                 <Bar/>
