@@ -25,8 +25,7 @@ export default class FormForLogin extends React.Component{
     }
 
     componentDidMount(){
-        this.getUserInformation();
-       // this._chek_logging();
+        this._chek_logging();
     }
 
     _chek_logging = async () => {
@@ -79,6 +78,7 @@ export default class FormForLogin extends React.Component{
                 AsyncStorage.setItem("user_id", response.headers.get('id'));
                 AsyncStorage.setItem("login_date", JSON.stringify(new Date()));
                 AsyncStorage.setItem("loginAndPass", JSON.stringify(logAndPass));
+                this.getUserInformation();
                 this.moveToTheUserProfile();
 
             })
