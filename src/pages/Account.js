@@ -26,8 +26,6 @@ export default class Account extends Component<{}>{
         this.setState({phoneNumber: number, cityAndCountry: country})
     };
 
-    // query
-
     getUserInformation = async () => {
 
         try {
@@ -64,11 +62,14 @@ export default class Account extends Component<{}>{
 
     };
 
+    componentDidMount(){
+
+        this.getUserInformation()
+    }
+
     //
 
     render(){
-        this.getUserInformation();
-
         return(
             <View style={styles.container}>
                 <AccountHeader/>
