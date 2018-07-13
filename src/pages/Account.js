@@ -23,49 +23,16 @@ export default class Account extends Component<{}>{
             email: '',
         }
     }
-    updateText = (number, country, email) => {
-        this.setState({phoneNumber: number, cityAndCountry: country, email: email})
-    };
-
-    getUserInformation = async () => {
-
-        try {
-            let user_id = await AsyncStorage.getItem("user_id");
-            let access_key = await AsyncStorage.getItem("access_key");
-
-            const id = {
-                id: user_id
-            };
-
-            fetch('http://10.0.2.2:8080/get_user_information', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': access_key,
-                },
-
-                body: JSON.stringify(id),
-            }).then((response) => response.json())
-                .then((responseJSON) => {
-                    this.updateText(responseJSON.phoneNumber, responseJSON.place, responseJSON.email);
-
-                }).catch((error) => {
-                alert(error)
-            });
-
-
-
-        }catch (e) {
-            alert("1 " + e)
-        }
-
-
+    updateText = async () => {
+        this.setState({
+            phoneNumber: await AsyncStorage.getItem("phoneNumber"),
+            cityAndCountry: await AsyncStorage.getItem("place"),
+            email: await AsyncStorage.getItem("email")})
     };
 
     componentDidMount(){
 
-        this.getUserInformation()
+        this.updateText();
     }
 
     //

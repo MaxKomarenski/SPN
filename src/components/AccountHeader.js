@@ -15,47 +15,13 @@ export default class Header extends Component<{}>{
         }
     }
 
-    updateName = (name) => {
-        this.setState({name: name})
-    };
-
-    getUserName = async () => {
-        try {
-            let user_id = await AsyncStorage.getItem("user_id");
-            let access_key = await AsyncStorage.getItem("access_key");
-
-            const id = {
-                id: user_id
-            };
-
-            fetch('http://10.0.2.2:8080/get_user_name', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': access_key,
-                },
-
-                body: JSON.stringify(id),
-            }).then((response) => response.text())
-                .then((responseTEXT) => {
-                    this.updateName(responseTEXT)
-                }).catch((error) => {
-                alert(error)
-            });
-
-
-
-        }catch (e) {
-            alert("1 " + e)
-        }
-
-
+    updateName = async () => {
+        this.setState({name: await AsyncStorage.getItem("name")})
     };
 
     componentDidMount(){
 
-        this.getUserName();
+        this.updateName();
     }
 
     render(){

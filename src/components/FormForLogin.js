@@ -25,8 +25,8 @@ export default class FormForLogin extends React.Component{
     }
 
     componentDidMount(){
-
-        this._chek_logging();
+        this.getUserInformation();
+       // this._chek_logging();
     }
 
     _chek_logging = async () => {
@@ -92,6 +92,45 @@ export default class FormForLogin extends React.Component{
 
 
     };
+
+    getUserInformation = async () => {
+
+        try {
+            let user_id = await AsyncStorage.getItem("user_id");
+            let access_key = await AsyncStorage.getItem("access_key");
+
+            const id = {
+                id: user_id
+            };
+
+            fetch('http://10.0.2.2:8080/get_user_information', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': access_key,
+                },
+
+                body: JSON.stringify(id),
+            }).then((response) => response.json())
+                .then((responseJSON) => {
+                    //this.updateText(responseJSON.phoneNumber, responseJSON.place, responseJSON.email);
+                    AsyncStorage.setItem("phoneNumber",  responseJSON.phoneNumber);
+                    AsyncStorage.setItem("place", responseJSON.place);
+                    AsyncStorage.setItem("email", responseJSON.email);
+                    AsyncStorage.setItem("name", responseJSON.name);
+
+
+
+                }).catch((error) => {
+                alert(error)
+            });
+        }catch (e) {
+            alert("1 " + e)
+        }
+    };
+
+
 
     onPress = () =>{
         console.log(this.state.login + ' ' + this.state.password);
